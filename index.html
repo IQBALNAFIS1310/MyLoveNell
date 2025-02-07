@@ -117,6 +117,31 @@
             margin-bottom: 20px;
         }
 
+        .btn-music {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #ff4081;
+        color: white;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out, background-color 0.3s;
+    }
+
+    .btn-music:hover {
+        background-color: #e63946;
+    }
+
+    .rotate {
+        transform: rotate(360deg);
+    }
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -139,12 +164,22 @@
                 background: #e63946;
             }
 
+            .surpriseKolom {
+                font-size: 10px;
+            }
+
             .nav ul.active {
                 display: flex;
             }
 
             .hamburger {
                 display: block;
+            }
+
+            #love-note {
+                padding: 20px 30px;
+                margin: 20px 15px;
+                max-width: 90%;
             }
         }
     </style>
@@ -155,8 +190,7 @@
         <button class="hamburger" onclick="toggleMenu()">☰</button>
         <ul>
             <li><a href="#" onclick="showSection('home')">Home</a></li>
-            <li><a href="#" onclick="showSection('album')">Album</a></li>
-            <li><a href="#" onclick="showSection('surprise')">Surprise</a></li>
+            <li><a href="./Html/Cake.html">Cake</a></li>
             <li><a href="#" onclick="showSection('love-note')">Love Note</a></li>
             <li><a href="#" onclick="showSection('memories')">Memories</a></li>
         </ul>
@@ -164,14 +198,10 @@
 
     <main>
         <div class="section" id="home">
-            <h1>😍😍Happy Birthday😍😍</h1>
-            <h1>😍😍ANELL😍😍</h1>
+            <h1>😍Happy Birthday😍</h1>
+            <h1>😍ANELL😍</h1>
             <p>Semoga Anel Sehat Selaluu, Dipanjangkan Umurnya Banyak Rezeki, Makin Sayang Sama Abang💕,</p>
             <p>Abang💕sangat bersyukur memilikimu dalam hidup Abang💕</p>
-        </div>
-
-        <div class="section" id="album">
-            <h2>Album Kenangan</h2>
         </div>
 
         <div class="section" id="memories">
@@ -228,26 +258,44 @@
 
                 Selamat ulang tahun, cinta! Teruslah bersinar dan jadilah dirimu yang luar biasa. 🎂💖</p>
         </div>
-
-        <div class="section" id="surprise">
-            <div class="message">📢Happy Birthday🎉</div>
-            <div class="message">❤️Sayangku❤️</div>
-            <div class="message">💕DUNIAKU💕</div>
-            <div class="message">😍CINTAKU😍</div>
-            <div class="message">PENCET LILIN</div>
-
-            <div class="cake">
-                <div class="candle" onclick="extinguishCandle(this)">
-                    <div class="flame"></div>
-                </div>
-            </div>
-
-            <div class="message" id="congratulationsMessage">
-                Horee! Lilin Telah Padam!
-            </div>
-        </div>
     </main>
-
+    <audio id="bg-music" loop>
+        <source src="./Resource/SoundTrack.mp3" type="audio/mp3">
+        Browser Anda tidak mendukung audio tag.
+    </audio>
+    
+    <button id="mute-btn" class="btn-music" onclick="toggleSound()">🔊</button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let audio = document.getElementById("bg-music");
+    
+            // Coba mulai musik saat halaman dimuat
+            audio.play().catch(error => {
+                console.log("Autoplay diblokir, pengguna harus memulai secara manual.");
+            });
+    
+            // Tampilkan home secara default
+            showSection('home');
+        });
+    
+        function toggleSound() {
+        let audio = document.getElementById("bg-music");
+        let btn = document.getElementById("mute-btn");
+        
+        if (audio.muted) {
+            audio.muted = false;
+            btn.textContent = "🔊";
+        } else {
+            audio.muted = true;
+            btn.textContent = "🔇";
+        }
+        
+        // Tambahkan efek rotasi saat tombol diklik
+        btn.classList.add("rotate");
+        setTimeout(() => btn.classList.remove("rotate"), 300);
+    }
+    </script>
     <script>
         // Fungsi untuk menampilkan bagian yang dipilih
         function showSection(sectionId) {
@@ -280,13 +328,13 @@
         });
 
         function extinguishCandle(candle) {
-      // Menambahkan kelas untuk memadamkan api
-      candle.classList.add('extinguished');
+            // Menambahkan kelas untuk memadamkan api
+            candle.classList.add('extinguished');
 
-      // Menampilkan pesan "Horee!" setelah lilin padam
-      const message = document.getElementById('congratulationsMessage');
-      message.style.display = 'block';
-    }
+            // Menampilkan pesan "Horee!" setelah lilin padam
+            const message = document.getElementById('congratulationsMessage');
+            message.style.display = 'block';
+        }
     </script>
 </body>
 
